@@ -1,0 +1,1 @@
+# bounding-client-rect-test
