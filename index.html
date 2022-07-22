@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bounding Client Rect</title>
+
+		<link
+			rel="stylesheet"
+			href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+		/>
+		<link rel="stylesheet" href="./index.css" />
+
+		<script src="./iframeResizer.contentWindow.min.js"></script>
+
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			.global-info-box {
+				position: fixed;
+				top: 0;
+				right: 0;
+				min-width: 150px;
+				background-color: burlywood;
+
+				padding: 15px;
+			}
+
+			.static-box {
+				height: 50px;
+				width: 300px;
+
+				background-color: blueviolet;
+				color: white;
+				margin: 25px 15px;
+
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			#box-container {
+				width: 350px;
+				min-height: 200px;
+				margin-top: 50px;
+				margin-left: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<pre class="global-info-box"></pre>
+
+		<div class="static-box">Box 1</div>
+		<div class="static-box">Box 2</div>
+		<div class="static-box">Box 3</div>
+		<div class="static-box">Box 4</div>
+		<div class="static-box">Box 5</div>
+		<div class="static-box">Box 6</div>
+		<div class="static-box">Box 7</div>
+		<div class="static-box">Box 8</div>
+		<div class="static-box">Box 9</div>
+		<div class="static-box">Box 10</div>
+		<div class="static-box">Box 11</div>
+		<div class="static-box">Box 12</div>
+
+		<div id="box-container">
+			<b>Test Box</b>
+			<br /><br />
+			<pre id="box-content"></pre>
+		</div>
+
+		<div class="static-box">Box 13</div>
+		<div class="static-box">Box 14</div>
+		<div class="static-box">Box 15</div>
+		<div class="static-box">Box 16</div>
+
+		<script>
+			function getGlobalInfo() {
+				const testboxValues = setTestBoxValues();
+				const info = {
+					windowHeight: window.innerHeight,
+					windowWidth: window.innerWidth,
+					scrollX: window.scrollX,
+					scrollY: window.scrollY,
+					testboxBoundingClientRectValues: testboxValues,
+				};
+
+				document.querySelector(".global-info-box").textContent =
+					JSON.stringify(info, null, 4);
+			}
+
+			function setTestBoxValues() {
+				let container = document.getElementById("box-container");
+				const bcr = container.getBoundingClientRect();
+				document.getElementById("box-content").textContent =
+					JSON.stringify(bcr, null, 4);
+				return bcr;
+			}
+
+			window.onscroll = function () {
+				// setTestBoxValues();
+				getGlobalInfo();
+			};
+
+			// setTestBoxValues();
+			getGlobalInfo();
+		</script>
+	</body>
+</html>

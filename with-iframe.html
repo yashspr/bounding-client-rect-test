@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>With Iframe</title>
+
+		<link
+			rel="stylesheet"
+			href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+		/>
+
+		<script src="./iframeResizer.min.js"></script>
+
+		<style>
+			#iframe {
+				border: 4px solid crimson;
+			}
+		</style>
+	</head>
+	<body>
+		<h3>With Iframe, lets observe the behaviour of bounding client rect</h3>
+		<h4>
+			To perform this test, load two servers with the current folder as
+			root. One on port 3000 & another on port 3001
+		</h4>
+		<h4>
+			And open this webpage from the link
+			http://localhost:3000/with-iframe.html
+		</h4>
+
+		<h1>This is when the iframe has a fixed width and height</h1>
+		<p>
+			So, the height and width that is set to the iframe acts as the
+			viewport for the webpage embedded inside the iframe
+		</p>
+		<iframe
+			id="iframe"
+			src="http://localhost:3001/index.html"
+			frameborder="0"
+			width="1200"
+			height="450"
+		></iframe>
+
+		<h1>
+			This is when the iframe is using iframe resizer to get maximize to
+			full width and height of the webpage in the iframe
+		</h1>
+		<p>
+			since the height of iframe will be equal to the max height of the
+			webpage in the iframe, it means the viewport = the webpage
+			dimensions and there are no scroll bars. So the values in
+			boundingClientRect doesnt change when scrolling
+		</p>
+		<iframe
+			id="iframe2"
+			src="http://localhost:3001/index.html"
+			frameborder="0"
+		></iframe>
+		<script>
+			iFrameResize(
+				{
+					log: false,
+					heightCalculationMethod: "max",
+					sizeWidth: true,
+					minWidth: 1260,
+				},
+				"#iframe2"
+			);
+		</script>
+
+		<div style="margin-top: 50px"></div>
+	</body>
+</html>
